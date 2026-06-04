@@ -166,7 +166,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);background-image:repe
         <div class="banner-title s">YouTube Series</div>
         <div class="banner-sub">Short Films · Drama · Comedy</div>
       </div>
-      <div class="banner-count">20 Channels</div>
+      <div class="banner-count">30 Channels</div>
     </div>
     <div class="series-tool">
       <div class="series-tool-hdr">🔍 Fetch Any Playlist / Channel Episodes</div>
@@ -185,7 +185,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);background-image:repe
         <div class="banner-title v">Cooking Videos</div>
         <div class="banner-sub">Recipes · Kitchen Channels</div>
       </div>
-      <div class="banner-count">20 Channels</div>
+      <div class="banner-count">30 Channels</div>
     </div>
     <div id="video-channels"></div>
   </div>
@@ -246,7 +246,17 @@ var Data = (function() {
     {name:"Shortfundly",         lang:"Hindi",         channelId:"UCOU6TFkfV_cpSq5rh1yBhjg"},
     {name:"Web Talkies",         lang:"Hindi",         channelId:"UC60oBP3R0LBb5h2NLfKrJ8A"},
     {name:"BhaDiPa",             lang:"Marathi",       channelId:"UC6P0P6Q-K1H0_v1vHw6TzXg"},
-    {name:"Karbhari",            lang:"Marathi",       channelId:"UC5X7u_3FN7IIxC1L_VTJqcw"}
+    {name:"Karbhari",            lang:"Marathi",       channelId:"UC5X7u_3FN7IIxC1L_VTJqcw"},
+    {name:"Atrangii",            lang:"Hindi",         channelId:"UCBfBACobZO_P2m7xP-4ySDQ"},
+    {name:"Desi Studios",        lang:"Hindi",         channelId:"UCnbfV0YvrxWMq3h0hmo13Jg"},
+    {name:"FWF Originals",       lang:"Hindi",         channelId:"UCG55trMQKKI1Gpa93nnfFXA"},
+    {name:"FWF Big Shorts",      lang:"Hindi",         channelId:"UCvYjsskcPHTSKZq5jHX1R5g"},
+    {name:"Indian Short Films",  lang:"Hindi",         channelId:"UCRpHd7yoytMmLAkHwOJJjJA"},
+    {name:"Mega Short Films",    lang:"Hindi",         channelId:"UC0Gc80GsW3OC6z89hYsnj3Q"},
+    {name:"Suryaa Drama",        lang:"Hindi",         channelId:"UCuBBmRtpHwkqz2-nphMvL1g"},
+    {name:"Arre",                lang:"Hindi",         channelId:"UCkYhoWbz967rcd8kZjKe3iA"},
+    {name:"Viddsee",             lang:"Hindi",         channelId:"UClQMNIPzABe5FqUrOO0yEiQ"},
+    {name:"ScoopWhoop",          lang:"Hindi",         channelId:"UCx2HcmpB-UZGkMXOCJ4QIVA"}
   ];
 
   var videos = [
@@ -269,7 +279,17 @@ var Data = (function() {
     {name:"Your Food Lab",          lang:"Hindi",   channelId:"UCe2JAC5FUfbxLCfAvBWmNJA"},
     {name:"CookingShooking Hindi",  lang:"Hindi",   channelId:"UCTbNOCtAGaqOEnLMeo3JTeg"},
     {name:"Nisha Madhulika",        lang:"Hindi",   channelId:"UCpvN19wfLFCBoGjEnYOWRsA"},
-    {name:"Bharatzkitchen",         lang:"Hindi",   channelId:"UCF5-UK9a5ZFKR3cjYDw2tpA"}
+    {name:"Bharatzkitchen",         lang:"Hindi",   channelId:"UCF5-UK9a5ZFKR3cjYDw2tpA"},
+    {name:"Chef Ranveer Brar",      lang:"Hindi",   channelId:"UCEHCDn_BBnk3uTK1M64ptyw"},
+    {name:"Get Curried",            lang:"Hindi",   channelId:"UChYpOn9tfcJkfjq7e0KaAhw"},
+    {name:"MasterChef Pankaj Bhadouria",lang:"Hindi",channelId:"UCA34Z3lq8FozSQzDHsSLcmQ"},
+    {name:"Archana's Kitchen",      lang:"Hindi",   channelId:"UCFaHKVsssaoZxM4WZLU0pCA"},
+    {name:"Masala Kitchen",         lang:"Hindi",   channelId:"UCSTwNIWgQmfpdDgs5A-IVeg"},
+    {name:"Simply Swadisht",        lang:"Marathi", channelId:"UCikcz1Qekq8CwgMkfAdpq2w"},
+    {name:"Shaila Marathi Kitchen", lang:"Marathi", channelId:"UCsfMEfRjdg4jXE-hIqHbmUw"},
+    {name:"CKP Cooking by Shama",   lang:"Marathi", channelId:"UCTqMclNHRqkzqVerXQTNTDw"},
+    {name:"Aple Kitchen",           lang:"Marathi", channelId:"UCRXG8C6ZCIA40Lzk_U7z69A"},
+    {name:"Foodie Saand",           lang:"Marathi", channelId:"UCmz1Dd0Nrq6gynpQravPE2g"}
   ];
 
   function feedUrl(ch) { return 'https://www.youtube.com/feeds/videos.xml?channel_id=' + ch.channelId; }
