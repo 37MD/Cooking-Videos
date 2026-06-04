@@ -406,6 +406,7 @@ var Storage = (function() {
 var Player = (function() {
   var _vid = null, _item = null;
   var _isLandscape = true;
+  var _fsGuard = false;   // prevents fullscreenchange -> close on intentional exit
 
   var overlay = document.getElementById('player-overlay');
   var iframe  = document.getElementById('player-iframe');
@@ -416,6 +417,18 @@ var Player = (function() {
   var pBtn    = document.getElementById('p-wl-btn');
   var pOrient = document.getElementById('p-orient-btn');
 
+  /* ---- cross-browser fullscreen helpers ---- */
+  function requestFS(el) {
+    return (el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen).call(el);
+  }
+  function exitFS() {
+    return (document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen).call(document);
+  }
+  function getFS() {
+    return document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+  }
+
+  /* ---- orientation helpers ---- */
   function lockOrientation(landscape) {
     try {
       if (screen.orientation && screen.orientation.lock) {
@@ -423,15 +436,24 @@ var Player = (function() {
       }
     } catch(e) {}
   }
-
   function unlockOrientation() {
     try {
-      if (screen.orientation && screen.orientation.unlock) {
-        screen.orientation.unlock();
-      }
+      if (screen.orientation && screen.orientation.unlock) { screen.orientation.unlock(); }
     } catch(e) {}
   }
 
+  /* ---- fullscreen + orientation combo ---- */
+  function enterFullscreenAndLock() {
+    requestFS(iframe).then(function() {
+      lockOrientation(true);
+    }).catch(function(){});
+  }
+  function exitFullscreenAndUnlock() {
+    if (getFS()) { exitFS().catch(function(){}); }
+    unlockOrientation();
+  }
+
+  /* ---- UI state ---- */
   function setOrientation(landscape) {
     _isLandscape = landscape;
     overlay.classList.toggle('landscape', landscape);
@@ -439,6 +461,17 @@ var Player = (function() {
     pOrient.textContent = landscape ? '↻ Landscape' : '↻ Portrait';
     pOrient.title = landscape ? 'Switch to Portrait' : 'Switch to Landscape';
   }
+
+  /* ---- fullscreen-change sync ---- */
+  function onFSChange() {
+    if (_fsGuard) { _fsGuard = false; return; }
+    if (!getFS() && overlay.classList.contains('active')) {
+      close();
+    }
+  }
+  document.addEventListener('fullscreenchange', onFSChange);
+  document.addEventListener('webkitfullscreenchange', onFSChange);
+  document.addEventListener('msfullscreenchange', onFSChange);
 
   function updateBtn() {
     if (!_vid) return;
@@ -459,23 +492,28 @@ var Player = (function() {
     pLink.href = link || ('https://www.youtube.com/watch?v=' + vid);
     updateBtn();
     setOrientation(true);
-    lockOrientation(true);
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    enterFullscreenAndLock();
   }
 
   function close() {
     overlay.classList.remove('active');
     iframe.src = '';
     document.body.style.overflow = '';
-    unlockOrientation();
+    exitFullscreenAndUnlock();
     _vid = null; _item = null;
   }
 
   function toggleOrientation() {
-    var goLandscape = !_isLandscape;
-    setOrientation(goLandscape);
-    lockOrientation(goLandscape);
+    if (_isLandscape) {
+      _fsGuard = true;
+      exitFullscreenAndUnlock();
+      setOrientation(false);
+    } else {
+      setOrientation(true);
+      enterFullscreenAndLock();
+    }
   }
 
   function toggleWL() {
